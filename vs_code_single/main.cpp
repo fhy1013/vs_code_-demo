@@ -1,88 +1,89 @@
+#include <iomanip>
 #include <iostream>
-#include <vector>
-#include <unordered_map>
+#include <limits>
+
 using namespace std;
 
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> tmp_map;
-        for(auto i = 0; i < nums.size(); ++i){
-            auto tmp = target - nums[i];
-            if(tmp_map.end() != tmp_map.find(tmp)){
-                return vector<int>{tmp_map[tmp], i};
-            }
-            if(tmp_map.end() == tmp_map.find(nums[i]))
-                tmp_map[nums[i]] = i;
-        }
-        return vector<int>{-1, -1};
-    }
-};
+void FuncHex() {
+    int tmp[] = {0x01, 0x11, 0x2, 0xaa, 0x0f};
+    for (auto& e : tmp)
+        std::cout << std::setw(2) << std::setfill('0') << std::hex << e << " ";
+    std::cout << std::endl;
+}
 
+void FuncVal() {
+    short s = 123;
+    int i = 777;
+    char str[16] = {0};
 
-class Solution {
-public:
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) 
-    {
-        ListNode* res = new ListNode(0);
-        ListNode* cur = new ListNode(0);
-        ListNode* temp_node = new ListNode(0);
-        res->next = cur;
-        char tem_r = 0;
-        while(1)
-        {
-            
-            char temp = (l1->val + l2->val + tem_r);
-            cur->next =  new ListNode(temp%10);
-            cur = cur->next;
-            tem_r = temp/10;
-            l1 = l1->next;
-            l2 = l2->next;
-            if(l1==NULL && l2==NULL && tem_r==0 ) break;
-            if(l1 == NULL) l1= temp_node;
-            if(l2 == NULL) l2= temp_node;
-        }
-        return res->next->next;
-    }
-};
+    memcpy(str, &s, 2);
+    memcpy(str + 2, &i, 4);
+    float d = 0.0;
+    d = static_cast<float>((str[0] | (str[1] << 8)) / 2.0);
+    int ii = 0;
+    ii = static_cast<int>(str[2] | (str[3] << 8) | (str[4] << 16) |
+                          (str[5] << 24));
+    int iii = 0;
+    memcpy(&iii, str + 2, 4);
 
+    std::cout << d << std::endl;
+}
 
-class Solution {
-public:
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* res;
-        ListNode* curr;
-        ListNode* null_node = new ListNode(0);
-        int carry = 0;
-        bool flag = true;
+template <typename T>
+void TestTemplate(T& t) {
+    auto size = sizeof(t);
+    std::cout << "size of t is: " << size << std::endl;
+}
 
-        while(l1 || l2 || carry > 0){
-            if(l1 == NULL) l1 = null_node;
-            if(l2 == NULL) l2 = null_node;
-            int sum = l1->val + l2->val + carry;
-            curr = new ListNode(sum%10);
-            if(flag){
-                res = curr;
-                flag = false;
-            }
-            carry = sum/10;
-            curr = curr->next;
-            l1 = l1->next;
-            l2 = l2->next;
-        }
-        return res;
-    }
-};
+void FuncSize() {
+    int tmp[4] = {0};
+    tmp[0] = 1;
+    std::cout << "size of tmp is: " << sizeof(tmp) << std::endl;
+    TestTemplate(tmp);
 
-int main(){
-    std::cout<< "hello..." << std::endl;
-    Solution s;
-    vector<int> vec{1, 1, 3, 5, 7, 10, 11};
-    int target = 6;
-    auto ret = s.twoSum(vec, target);
-    if(!ret.empty()){
-        cout<<ret[0] << ", "<<ret[1]<<endl;
-    }
+    char str[9] = {0};
+    str[0] = 'a';
+    str[1] = 'b';
+    std::cout << "size of str is: " << sizeof(str) << std::endl;
+    TestTemplate(str);
 
+    // TestTemplate(nullptr);
+    return;
+}
+
+template <class T>
+void ToString(string& result, const T& t) {
+    ostringstream oss;
+    oss.precision(std::numeric_limits<double>::digits10);
+    oss << t;
+    result = oss.str();
+}
+void FuncDoubleToString() {
+    double d = 11378462.1;
+    std::string s;
+    ToString(s, d);
+    auto len = s.length();
+
+    char tmp[48] = {0};
+    // sprintf(tmp, "%0.12f", d);
+    sprintf_s(tmp, 16, "%08.2f", d);
+    int x = 0;
+}
+
+void FuncSizeof() {
+    int arr[32] = {0};
+    int size = 0;
+    size = sizeof(arr);
+    return;
+}
+
+int main() {
+    std::cout << "hello..." << std::endl;
+    // FuncSolution();
+    // FuncHex();
+    // FuncVal();
+    // FuncSize();
+    FuncDoubleToString();
+    // FuncSizeof();
     return 0;
 }
